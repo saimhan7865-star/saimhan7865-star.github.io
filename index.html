@@ -1,1 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
 
+<title>World Countries Information | Flags, Capital, Population | Free Atlas</title>
+
+<meta name="google-site-verification" content="Vu-66JyhBELk0eU5zz4w0NNDkAi309q1rmQfJqQBIvM" />
+<link rel="icon" type="image/png" href="file_00000000a8f871fabc468bcaaa5f718f.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Explore world countries, capitals, population, languages and currencies. Free world atlas and geography learning website.">
+<meta name="keywords" content="world countries, flags, capitals, population, geography, atlas">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Saim">
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  color:white;
+  background:url("https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg");
+  background-size:cover;
+  background-attachment:fixed;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+  z-index:-1;
+}
+
+.header{
+  background:linear-gradient(90deg,#5A3A1E,#a05a2c);
+  text-align:center;
+  padding:14px;
+}
+
+h1{margin:0;}
+h3{margin:5px;font-weight:normal;}
+
+input{
+  display:block;
+  margin:10px auto;
+  padding:10px;
+  width:60%;
+  border-radius:8px;
+  border:none;
+}
+
+/* compare */
+.compare{
+  text-align:center;
+  margin:10px;
+}
+
+select,button{
+  padding:8px;
+  margin:4px;
+  border-radius:6px;
+  border:none;
+}
+
+button{
+  background:#5A3A1E;
+  color:white;
+  cursor:pointer;
+}
+.more-btn{
+  background:linear-gradient(45deg,#00c6ff,#0072ff);
+  color:white;
+  font-size:18px;
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:bold;
+  box-shadow:0 4px 15px rgba(0,114,255,0.4);
+}
+.container{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.card{
+  background:white;
+  color:black;
+  width:170px;
+  margin:6px;
+  padding:10px;
+  border-radius:12px;
+  cursor:pointer;
+  text-align:center;
+  transition:0.2s;
+}
+
+.card:hover{transform:scale(1.06);}
+
+.flag{font-size:26px;}
+
+/* modal */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  justify-content:center;
+  align-items:center;
+}
+
+.box{
+  background:linear-gradient(135deg,#fff,#ddd);
+  color:black;
+  padding:18px;
+  width:320px;
+  border-radius:15px;
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  right:10px;
+  top:10px;
+  background:red;
+  color:white;
+  border:none;
+  padding:5px 8px;
+  cursor:pointer;
+}
+
+#result{
+  color:green;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>🌍 World Explorer Pro Max</h1>
+<h3>Created by SAIM</h3>
+</div>
+
+  <div style="max-width:900px;margin:20px auto;padding:15px;text-align:center;">
+<h2>World Countries Information</h2>
+
+<p>
+Explore countries around the world including their flags, capitals, population, languages and currencies. You can also compare countries and improve your geography knowledge.
+</p>
+  </div>
+  
+<div style="text-align:center;margin-top:10px;">
+  <button class="more-btn" onclick="openMore()">
+    🎮 More Games & Quiz
+  </button>
+</div>
+<!-- COMPARE -->
+<div class="compare">
+<select id="c1"></select>
+<select id="c2"></select>
+<button onclick="compare()">Compare</button>
+</div>
+
+<input id="search" placeholder="Search country..." onkeyup="filter()">
+
+<div class="container" id="container"></div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="box">
+<button class="close" onclick="closeModal()">X</button>
+
+<h2 id="n"></h2>
+<p id="c"></p>
+<p id="p"></p>
+<p id="l"></p>
+<p id="cur"></p>
+
+<h3 id="result"></h3>
+
+</div>
+</div>
+
+<script>
+
+/* 🌍 COUNTRIES */
+const countries = [
+["🇦🇫 Afghanistan","Kabul","41M","Pashto/Dari","AFN"],
+["🇦🇱 Albania","Tirana","2.8M","Albanian","ALL"],
+["🇩🇿 Algeria","Algiers","45M","Arabic","DZD"],
+["🇦🇩 Andorra","Andorra la Vella","80K","Catalan","EUR"],
+["🇦🇴 Angola","Luanda","36M","Portuguese","AOA"],
+["🇦🇷 Argentina","Buenos Aires","46M","Spanish","ARS"],
+["🇦🇲 Armenia","Yerevan","3M","Armenian","AMD"],
+["🇦🇺 Australia","Canberra","26M","English","AUD"],
+["🇦🇹 Austria","Vienna","9M","German","EUR"],
+["🇦🇿 Azerbaijan","Baku","10M","Azerbaijani","AZN"],
+
+["🇧🇸 Bahamas","Nassau","0.4M","English","BSD"],
+["🇧🇭 Bahrain","Manama","1.7M","Arabic","BHD"],
+["🇧🇩 Bangladesh","Dhaka","170M","Bengali","BDT"],
+["🇧🇪 Belgium","Brussels","11M","Dutch/French","EUR"],
+["🇧🇷 Brazil","Brasília","214M","Portuguese","BRL"],
+
+["🇨🇦 Canada","Ottawa","40M","English/French","CAD"],
+["🇨🇳 China","Beijing","1.4B","Chinese","CNY"],
+["🇨🇴 Colombia","Bogotá","52M","Spanish","COP"],
+["🇨🇷 Costa Rica","San José","5M","Spanish","CRC"],
+["🇭🇷 Croatia","Zagreb","4M","Croatian","EUR"],
+
+["🇨🇺 Cuba","Havana","11M","Spanish","CUP"],
+["🇨🇿 Czechia","Prague","10M","Czech","CZK"],
+["🇩🇰 Denmark","Copenhagen","6M","Danish","DKK"],
+["🇪🇬 Egypt","Cairo","110M","Arabic","EGP"],
+["🇪🇹 Ethiopia","Addis Ababa","120M","Amharic","ETB"],
+
+["🇫🇷 France","Paris","68M","French","EUR"],
+["🇩🇪 Germany","Berlin","83M","German","EUR"],
+["🇬🇷 Greece","Athens","10M","Greek","EUR"],
+["🇭🇺 Hungary","Budapest","9M","Hungarian","HUF"],
+["🇮🇳 India","New Delhi","1.4B","Hindi","INR"],
+
+["🇮🇩 Indonesia","Jakarta","275M","Indonesian","IDR"],
+["🇮🇷 Iran","Tehran","88M","Persian","IRR"],
+["🇮🇶 Iraq","Baghdad","44M","Arabic","IQD"],
+["🇮🇪 Ireland","Dublin","5M","English","EUR"],
+["🇮🇹 Italy","Rome","60M","Italian","EUR"],
+
+["🇯🇵 Japan","Tokyo","125M","Japanese","JPY"],
+["🇯🇴 Jordan","Amman","11M","Arabic","JOD"],
+["🇰🇪 Kenya","Nairobi","55M","Swahili/English","KES"],
+["🇰🇷 South Korea","Seoul","52M","Korean","KRW"],
+["🇰🇼 Kuwait","Kuwait City","4M","Arabic","KWD"],
+
+["🇱🇧 Lebanon","Beirut","6M","Arabic","LBP"],
+["🇱🇾 Libya","Tripoli","7M","Arabic","LYD"],
+["🇲🇾 Malaysia","Kuala Lumpur","33M","Malay","MYR"],
+["🇲🇽 Mexico","Mexico City","126M","Spanish","MXN"],
+["🇲🇦 Morocco","Rabat","37M","Arabic","MAD"],
+
+["🇳🇵 Nepal","Kathmandu","30M","Nepali","NPR"],
+["🇳🇱 Netherlands","Amsterdam","17M","Dutch","EUR"],
+["🇳🇬 Nigeria","Abuja","220M","English","NGN"],
+["🇳🇴 Norway","Oslo","5M","Norwegian","NOK"],
+["🇵🇰 Pakistan","Islamabad","240M","Urdu","PKR"],
+
+["🇵🇱 Poland","Warsaw","38M","Polish","PLN"],
+["🇵🇹 Portugal","Lisbon","10M","Portuguese","EUR"],
+["🇶🇦 Qatar","Doha","3M","Arabic","QAR"],
+["🇷🇺 Russia","Moscow","144M","Russian","RUB"],
+["🇸🇦 Saudi Arabia","Riyadh","36M","Arabic","SAR"],
+
+["🇿🇦 South Africa","Pretoria","60M","English","ZAR"],
+["🇪🇸 Spain","Madrid","47M","Spanish","EUR"],
+["🇸🇪 Sweden","Stockholm","10M","Swedish","SEK"],
+["🇨🇭 Switzerland","Bern","8M","German/French","CHF"],
+["🇹🇷 Turkey","Ankara","85M","Turkish","TRY"],
+
+["🇬🇧 UK","London","67M","English","GBP"],
+["🇺🇸 USA","Washington DC","330M","English","USD"],
+["🇺🇦 Ukraine","Kyiv","41M","Ukrainian","UAH"],
+["🇦🇪 UAE","Abu Dhabi","10M","Arabic","AED"],
+["🇻🇳 Vietnam","Hanoi","98M","Vietnamese","VND"],
+
+["🇸🇬 Singapore","Singapore","6M","English","SGD"],
+["🇦🇬 Antigua and Barbuda","Saint John's","0.1M","English","XCD"],
+["🇧🇿 Belize","Belmopan","0.4M","English","BZD"],
+["🇧🇯 Benin","Porto-Novo","13M","French","XOF"],
+["🇧🇹 Bhutan","Thimphu","0.8M","Dzongkha","BTN"],
+["🇧🇴 Bolivia","Sucre","12M","Spanish","BOB"],
+
+["🇧🇦 Bosnia and Herzegovina","Sarajevo","3M","Bosnian","BAM"],
+["🇧🇼 Botswana","Gaborone","2.6M","English/Setswana","BWP"],
+["🇧🇬 Bulgaria","Sofia","6.5M","Bulgarian","BGN"],
+["🇧🇫 Burkina Faso","Ouagadougou","23M","French","XOF"],
+["🇧🇮 Burundi","Gitega","13M","Kirundi/French","BIF"],
+
+["🇰🇭 Cambodia","Phnom Penh","17M","Khmer","KHR"],
+["🇨🇲 Cameroon","Yaoundé","28M","French/English","XAF"],
+["🇨🇻 Cape Verde","Praia","0.6M","Portuguese","CVE"],
+["🇨🇫 Central African Republic","Bangui","5M","French/Sango","XAF"],
+["🇹🇩 Chad","N'Djamena","18M","French/Arabic","XAF"],
+
+["🇰🇲 Comoros","Moroni","0.9M","Arabic/French","KMF"],
+["🇨🇬 Congo","Brazzaville","6M","French","XAF"],
+["🇨🇩 DR Congo","Kinshasa","102M","French","CDF"],
+["🇩🇯 Djibouti","Djibouti","1M","French/Arabic","DJF"],
+["🇩🇲 Dominica","Roseau","0.07M","English","XCD"],
+
+["🇩🇴 Dominican Republic","Santo Domingo","11M","Spanish","DOP"],
+["🇸🇻 El Salvador","San Salvador","6M","Spanish","USD"],
+["🇬🇶 Equatorial Guinea","Malabo","1.7M","Spanish/French","XAF"],
+["🇪🇷 Eritrea","Asmara","3.6M","Tigrinya/Arabic","ERN"],
+["🇸🇿 Eswatini","Mbabane","1.2M","English/Swazi","SZL"],
+
+["🇫🇯 Fiji","Suva","0.9M","English/Fijian","FJD"],
+["🇬🇦 Gabon","Libreville","2.3M","French","XAF"],
+["🇬🇲 Gambia","Banjul","2.7M","English","GMD"],
+["🇬🇪 Georgia","Tbilisi","3.7M","Georgian","GEL"],
+["🇬🇭 Ghana","Accra","33M","English","GHS"],
+
+["🇬🇩 Grenada","St. George's","0.1M","English","XCD"],
+["🇬🇹 Guatemala","Guatemala City","18M","Spanish","GTQ"],
+["🇬🇳 Guinea","Conakry","14M","French","GNF"],
+["🇬🇼 Guinea-Bissau","Bissau","2M","Portuguese","XOF"],
+["🇬🇾 Guyana","Georgetown","0.8M","English","GYD"],
+
+["🇭🇹 Haiti","Port-au-Prince","11M","French/Creole","HTG"],
+["🇭🇳 Honduras","Tegucigalpa","10M","Spanish","HNL"],
+["🇮🇸 Iceland","Reykjavik","0.4M","Icelandic","ISK"],
+["🇯🇲 Jamaica","Kingston","2.8M","English","JMD"],
+["🇰🇮 Kiribati","Tarawa","0.12M","English","AUD"],
+
+["🇱🇦 Laos","Vientiane","7.5M","Lao","LAK"],
+["🇱🇸 Lesotho","Maseru","2.3M","English/Sesotho","LSL"],
+["🇱🇷 Liberia","Monrovia","5.4M","English","LRD"],
+["🇱🇮 Liechtenstein","Vaduz","0.04M","German","CHF"],
+["🇱🇺 Luxembourg","Luxembourg","0.6M","Luxembourgish","EUR"],
+
+["🇲🇬 Madagascar","Antananarivo","30M","Malagasy/French","MGA"],
+["🇲🇼 Malawi","Lilongwe","20M","English/Chichewa","MWK"],
+["🇲🇻 Maldives","Malé","0.5M","Dhivehi","MVR"],
+["🇲🇱 Mali","Bamako","23M","French","XOF"],
+["🇲🇹 Malta","Valletta","0.5M","Maltese/English","EUR"],
+
+["🇲🇭 Marshall Islands","Majuro","0.06M","English/Marshallese","USD"],
+["🇲🇷 Mauritania","Nouakchott","5M","Arabic","MRU"],
+["🇲🇺 Mauritius","Port Louis","1.3M","English/French","MUR"],
+["🇫🇲 Micronesia","Palikir","0.1M","English","USD"],
+["🇲🇩 Moldova","Chisinau","2.5M","Romanian","MDL"],
+
+["🇲🇨 Monaco","Monaco","0.04M","French","EUR"],
+["🇲🇳 Mongolia","Ulaanbaatar","3.4M","Mongolian","MNT"],
+["🇲🇪 Montenegro","Podgorica","0.6M","Montenegrin","EUR"],
+["🇲🇿 Mozambique","Maputo","33M","Portuguese","MZN"],
+["🇲🇲 Myanmar","Naypyidaw","55M","Burmese","MMK"],
+
+["🇳🇦 Namibia","Windhoek","2.6M","English","NAD"],
+["🇳🇷 Nauru","Yaren","0.01M","English","AUD"],
+["🇳🇮 Nicaragua","Managua","6.8M","Spanish","NIO"],
+["🇳🇪 Niger","Niamey","26M","French","XOF"],
+["🇳🇺 Niue","Alofi","0.002M","English","NZD"],
+
+["🇵🇼 Palau","Ngerulmud","0.02M","English","USD"],
+["🇵🇦 Panama","Panama City","4.4M","Spanish","PAB"],
+["🇵🇬 Papua New Guinea","Port Moresby","10M","English","PGK"],
+["🇵🇾 Paraguay","Asunción","7M","Spanish/Guarani","PYG"],
+["🇷🇼 Rwanda","Kigali","14M","English/French","RWF"],
+
+["🇰🇳 Saint Kitts and Nevis","Basseterre","0.05M","English","XCD"],
+["🇱🇨 Saint Lucia","Castries","0.18M","English","XCD"],
+["🇻🇨 Saint Vincent and the Grenadines","Kingstown","0.1M","English","XCD"],
+["🇼🇸 Samoa","Apia","0.2M","Samoan/English","WST"],
+["🇸🇲 San Marino","San Marino","0.03M","Italian","EUR"],
+
+["🇸🇹 Sao Tome and Principe","São Tomé","0.2M","Portuguese","STN"],
+["🇸🇳 Senegal","Dakar","18M","French","XOF"],
+["🇷🇸 Serbia","Belgrade","7M","Serbian","RSD"],
+["🇸🇨 Seychelles","Victoria","0.1M","English/French","SCR"],
+["🇸🇱 Sierra Leone","Freetown","8M","English","SLL"],
+
+["🇸🇰 Slovakia","Bratislava","5.4M","Slovak","EUR"],
+["🇸🇮 Slovenia","Ljubljana","2.1M","Slovene","EUR"],
+["🇸🇧 Solomon Islands","Honiara","0.7M","English","SBD"],
+["🇸🇴 Somalia","Mogadishu","18M","Somali/Arabic","SOS"],
+["🇸🇸 South Sudan","Juba","11M","English","SSP"],
+
+["🇱🇰 Sri Lanka","Sri Jayawardenepura","22M","Sinhala/Tamil","LKR"],
+["🇸🇩 Sudan","Khartoum","48M","Arabic","SDG"],
+["🇸🇷 Suriname","Paramaribo","0.6M","Dutch","SRD"],
+["🇸🇾 Syria","Damascus","23M","Arabic","SYP"],
+["🇹🇯 Tajikistan","Dushanbe","10M","Tajik","TJS"],
+
+["🇹🇿 Tanzania","Dodoma","67M","Swahili/English","TZS"],
+["🇹🇱 Timor-Leste","Dili","1.3M","Portuguese/Tetum","USD"],
+["🇹🇬 Togo","Lomé","9M","French","XOF"],
+["🇹🇴 Tonga","Nuku'alofa","0.1M","Tongan/English","TOP"],
+["🇹🇹 Trinidad and Tobago","Port of Spain","1.5M","English","TTD"],
+
+["🇹🇳 Tunisia","Tunis","12M","Arabic","TND"],
+["🇹🇲 Turkmenistan","Ashgabat","6M","Turkmen","TMT"],
+["🇺🇬 Uganda","Kampala","48M","English/Swahili","UGX"],
+["🇺🇾 Uruguay","Montevideo","3.5M","Spanish","UYU"],
+["🇺🇿 Uzbekistan","Tashkent","35M","Uzbek","UZS"],
+
+["🇻🇺 Vanuatu","Port Vila","0.3M","Bislama/English","VUV"],
+["🇻🇦 Vatican City","Vatican City","0.001M","Latin/Italian","EUR"],
+["🇾🇪 Yemen","Sanaa","34M","Arabic","YER"],
+["🇿🇲 Zambia","Lusaka","20M","English","ZMW"],
+["🇿🇼 Zimbabwe","Harare","16M","English","ZWL"]
+];
+let container=document.getElementById("container");
+
+function show(data){
+container.innerHTML="";
+data.forEach(c=>{
+container.innerHTML+=`
+<div class="card" onclick="openModal('${c[0]}','${c[1]}','${c[2]}','${c[3]}','${c[4]}')">
+<div class="flag">${c[0].split(" ")[0]}</div>
+<b>${c[0].replace(c[0].split(" ")[0],"")}</b>
+</div>`;
+});
+}
+show(countries);
+
+/* SEARCH */
+function filter(){
+let v=document.getElementById("search").value.toLowerCase();
+show(countries.filter(c=>c[0].toLowerCase().includes(v)));
+}
+
+/* MODAL */
+function openModal(n,c,p,l,cur){
+document.getElementById("modal").style.display="flex";
+document.getElementById("n").innerText=n;
+document.getElementById("c").innerText="Capital: "+c;
+document.getElementById("p").innerText="Population: "+p+"M";
+document.getElementById("l").innerText="Language: "+l;
+document.getElementById("cur").innerText="Currency: "+cur;
+document.getElementById("result").innerText="";
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+
+/* COMPARE SYSTEM */
+let s1=document.getElementById("c1");
+let s2=document.getElementById("c2");
+
+countries.forEach(c=>{
+s1.innerHTML+=`<option>${c[0]}</option>`;
+s2.innerHTML+=`<option>${c[0]}</option>`;
+});
+
+function compare(){
+
+let a = countries.find(c=>c[0]==s1.value);
+let b = countries.find(c=>c[0]==s2.value);
+
+let popA = Number(a[2]);
+let popB = Number(b[2]);
+
+let winner = popA > popB ? a : b;
+
+document.getElementById("modal").style.display="flex";
+
+document.getElementById("n").innerText="⚔ Country Battle Result";
+document.getElementById("c").innerText="";
+document.getElementById("p").innerText="";
+document.getElementById("l").innerText="";
+document.getElementById("cur").innerText="";
+
+document.getElementById("result").innerHTML =
+`${a[0]} VS ${b[0]} <br><br>
+🏆 WINNER: <b>${winner[0]}</b>`;
+}
+function openMore(){
+  window.location.href="https://saimhan7865-star.github.io/World-Quiz/";
+  }
+</script>
+<footer style="text-align:center;padding:20px;background:#222;margin-top:20px;">
+<p>© 2026 World Explorer Pro Max</p>
+
+<p>
+<a href="about.html" style="color:white;">About</a> |
+<a href="contact.html" style="color:white;">Contact</a> |
+<a href="privacy-policy.html" style="color:white;">Privacy Policy</a>
+</p>
+</footer>
+
+</body>
+  </html>
