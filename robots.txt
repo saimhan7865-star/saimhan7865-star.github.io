@@ -1,1 +1,4 @@
+User-agent: *
+Allow: /
 
+Sitemap: https://saimhan7865-star.github.io/My-Websites/sitemap.xml
