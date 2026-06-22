@@ -430,13 +430,14 @@ show(countries.filter(c=>c[0].toLowerCase().includes(v)));
 
 /* MODAL */
 function openModal(n,c,p,l,cur){
-document.getElementById("modal").style.display="flex";
-document.getElementById("n").innerText=n;
-document.getElementById("c").innerText="Capital: "+c;
-document.getElementById("p").innerText="Population: "+p+"M";
-document.getElementById("l").innerText="Language: "+l;
-document.getElementById("cur").innerText="Currency: "+cur;
-document.getElementById("result").innerText="";
+  document.getElementById("modal").style.display="flex";
+
+  document.getElementById("n").innerText=n;
+  document.getElementById("c").innerText="Capital: "+c;
+  document.getElementById("p").innerText="Population: "+p+"M";
+  document.getElementById("l").innerText=l;
+  document.getElementById("cur").innerText=cur;
+  document.getElementById("result").innerText="";
 }
 
 function closeModal(){
