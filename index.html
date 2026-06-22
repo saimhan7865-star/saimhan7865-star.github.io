@@ -487,6 +487,21 @@ function openMore(){
 <a href="privacy-policy.html" style="color:white;">Privacy Policy</a>
 </p>
 </footer>
+<script>
+let deferredPrompt;
 
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+  } else {
+    alert("Open in Chrome to install app");
+  }
+}
+</script>
 </body>
   </html>
