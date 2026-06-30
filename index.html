@@ -194,7 +194,18 @@ Explore countries around the world including their flags, capitals, population, 
 <p id="p"></p>
 <p id="l"></p>
 <p id="cur"></p>
-<p id="info"></p>
+<button id="moreBtn" onclick="showMore()">📖 More Info</button>
+
+<div id="info" style="
+display:none;
+margin-top:15px;
+max-height:250px;
+overflow-y:auto;
+text-align:left;
+background:#f3f3f3;
+padding:10px;
+border-radius:8px;
+"></div>
 <h3 id="result"></h3>
 
 </div>
@@ -502,6 +513,18 @@ document.getElementById("result").innerHTML =
 function openMore(){
   window.location.href="https://saimhan7865-star.github.io/World-Quiz/";
   }
+function showMore(){
+
+let country = document.getElementById("n").innerText;
+country = country.replace(/^[^\s]+\s/, "").trim();
+
+let file = country.toLowerCase()
+.replace(/ /g,"-")
+.replace(/\./g,"");
+
+window.location.href = file + ".html";
+
+}
 </script>
 <footer style="text-align:center;padding:20px;background:#222;margin-top:20px;">
 <p>© 2026 World Explorer Pro Max</p>
