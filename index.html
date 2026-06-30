@@ -194,7 +194,7 @@ Explore countries around the world including their flags, capitals, population, 
 <p id="p"></p>
 <p id="l"></p>
 <p id="cur"></p>
-
+<p id="info"></p>
 <h3 id="result"></h3>
 
 </div>
@@ -448,8 +448,27 @@ const details = {
 
 "Austria": "Austria is a Central European country known for the Alps, classical music and historic cities. Famous places include Vienna and Salzburg. Area: 83,879 km². National Day: 26 October. Time Zone: CET (UTC+1).",
 
-"Azerbaijan": "Azerbaijan is located between Eastern Europe and Western Asia. It is known as the Land of Fire because of its natural gas flames. Famous place: Flame Towers in Baku. Area: 86,600 km². Independence Day: 28 May. Time Zone: AZT (UTC+4)."
+"Azerbaijan": "Azerbaijan is located between Eastern Europe and Western Asia. It is known as the Land of Fire because of its natural gas flames. Famous place: Flame Towers in Baku. Area: 86,600 km². Independence Day: 28 May. Time Zone: AZT (UTC+4).",
 
+"Bahamas":"The Bahamas is an island country in the Atlantic Ocean. It has over 700 islands. Famous for beaches, tourism and clear blue water.",
+
+"Bahrain":"Bahrain is a small island country in the Persian Gulf. It is famous for finance, Formula 1 racing and oil production.",
+
+"Bangladesh":"Bangladesh is located in South Asia. It is known for the Sundarbans mangrove forest, rivers and garment industry.",
+
+"Belgium":"Belgium is located in Western Europe. It is famous for chocolates, waffles, fries and the headquarters of the European Union.",
+
+"Brazil":"Brazil is the largest country in South America. It is famous for the Amazon Rainforest, Carnival festival and football.",
+
+"Canada":"Canada is the second largest country in the world by area. It is famous for maple syrup, lakes and beautiful nature.",
+
+"China":"China is the world's most populous countries. It is famous for the Great Wall, technology, history and manufacturing.",
+
+"Colombia":"Colombia is located in South America. It is famous for coffee, mountains, music and biodiversity.",
+
+"Costa Rica":"Costa Rica is a Central American country known for rainforests, wildlife, volcanoes and eco-tourism.",
+
+"Croatia":"Croatia is located in Southeast Europe. It is famous for the Adriatic Sea, historic cities and beautiful islands."
 };
 let container=document.getElementById("container");
 
@@ -477,9 +496,15 @@ function openModal(n,c,p,l,cur){
 
   document.getElementById("n").innerText=n;
   document.getElementById("c").innerText="Capital: "+c;
-  document.getElementById("p").innerText="Population: "+p+"M";
-  document.getElementById("l").innerText=l;
-  document.getElementById("cur").innerText=cur;
+  document.getElementById("p").innerText="Population: "+p;
+  document.getElementById("l").innerText="Language: "+l;
+  document.getElementById("cur").innerText="Currency: "+cur;
+
+  let country = n.replace(/^[^\s]+\s/, "");
+
+  document.getElementById("info").innerText =
+      details[country] || "Information coming soon.";
+
   document.getElementById("result").innerText="";
 }
 
