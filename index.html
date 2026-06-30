@@ -428,48 +428,7 @@ const countries = [
 ["🇬🇬 Guernsey","Saint Peter Port","0.06M","English","GBP"],
 ["🇮🇲 Isle of Man","Douglas","0.08M","English","GBP"]
 ];
-const details = {
 
-"Afghanistan": "Afghanistan is a landlocked country in South Asia. It shares borders with Pakistan, Iran, Turkmenistan, Uzbekistan, Tajikistan and China. Famous places include the Blue Mosque in Mazar-i-Sharif and the Bamiyan Valley. Area: 652,230 km². Independence Day: 19 August. Time Zone: AFT (UTC+4:30).",
-
-"Albania": "Albania is a country in Southeast Europe on the Balkan Peninsula. It is famous for its Adriatic and Ionian Sea beaches and mountains. Area: 28,748 km². Independence Day: 28 November. Time Zone: CET (UTC+1).",
-
-"Algeria": "Algeria is the largest country in Africa by area. Most of the country is covered by the Sahara Desert. Famous places include Tassili n'Ajjer National Park and the Casbah of Algiers. Area: 2,381,741 km². Independence Day: 5 July. Time Zone: UTC+1.",
-
-"Andorra": "Andorra is a small country between France and Spain in the Pyrenees Mountains. It is famous for skiing and shopping. Area: 468 km². Independence Day: 8 September. Time Zone: CET (UTC+1).",
-
-"Angola": "Angola is located in southwestern Africa. It has a long Atlantic coastline and rich natural resources including oil and diamonds. Area: 1,246,700 km². Independence Day: 11 November. Time Zone: WAT (UTC+1).",
-
-"Argentina": "Argentina is the second-largest country in South America. It is famous for tango, football, Patagonia and Iguazu Falls. Area: 2,780,400 km². Independence Day: 9 July. Time Zone: ART (UTC-3).",
-
-"Armenia": "Armenia is a landlocked country in the South Caucasus. It was the first country to adopt Christianity as a state religion. Famous place: Lake Sevan. Area: 29,743 km². Independence Day: 21 September. Time Zone: AMT (UTC+4).",
-
-"Australia": "Australia is both a country and a continent. It is famous for the Sydney Opera House, Great Barrier Reef and unique wildlife like kangaroos and koalas. Area: 7,692,024 km². National Day: 26 January. Time Zone: Multiple.",
-
-"Austria": "Austria is a Central European country known for the Alps, classical music and historic cities. Famous places include Vienna and Salzburg. Area: 83,879 km². National Day: 26 October. Time Zone: CET (UTC+1).",
-
-"Azerbaijan": "Azerbaijan is located between Eastern Europe and Western Asia. It is known as the Land of Fire because of its natural gas flames. Famous place: Flame Towers in Baku. Area: 86,600 km². Independence Day: 28 May. Time Zone: AZT (UTC+4).",
-
-"Bahamas":"The Bahamas is an island country in the Atlantic Ocean. It has over 700 islands. Famous for beaches, tourism and clear blue water.",
-
-"Bahrain":"Bahrain is a small island country in the Persian Gulf. It is famous for finance, Formula 1 racing and oil production.",
-
-"Bangladesh":"Bangladesh is located in South Asia. It is known for the Sundarbans mangrove forest, rivers and garment industry.",
-
-"Belgium":"Belgium is located in Western Europe. It is famous for chocolates, waffles, fries and the headquarters of the European Union.",
-
-"Brazil":"Brazil is the largest country in South America. It is famous for the Amazon Rainforest, Carnival festival and football.",
-
-"Canada":"Canada is the second largest country in the world by area. It is famous for maple syrup, lakes and beautiful nature.",
-
-"China":"China is the world's most populous countries. It is famous for the Great Wall, technology, history and manufacturing.",
-
-"Colombia":"Colombia is located in South America. It is famous for coffee, mountains, music and biodiversity.",
-
-"Costa Rica":"Costa Rica is a Central American country known for rainforests, wildlife, volcanoes and eco-tourism.",
-
-"Croatia":"Croatia is located in Southeast Europe. It is famous for the Adriatic Sea, historic cities and beautiful islands."
-};
 let container=document.getElementById("container");
 
 function show(data){
@@ -501,9 +460,6 @@ function openModal(n,c,p,l,cur){
   document.getElementById("cur").innerText="Currency: "+cur;
 
   let country = n.replace(/^[^\s]+\s/, "");
-
-  document.getElementById("info").innerText =
-      details[country] || "Information coming soon.";
 
   document.getElementById("result").innerText="";
 }
