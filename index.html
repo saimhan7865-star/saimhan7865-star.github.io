@@ -444,9 +444,17 @@ let container=document.getElementById("container");
 
 function show(data){
 container.innerHTML="";
+
 data.forEach(c=>{
-container.innerHTML+=`
-<div class="card" onclick="openModal('${c[0]}','${c[1]}','${c[2]}','${c[3]}','${c[4]}')">
+
+let name = JSON.stringify(c[0]);
+let capital = JSON.stringify(c[1]);
+let pop = JSON.stringify(c[2]);
+let lang = JSON.stringify(c[3]);
+let cur = JSON.stringify(c[4]);
+
+container.innerHTML += `
+<div class="card" onclick='openModal(${name},${capital},${pop},${lang},${cur})'>
 <div class="flag">${c[0].split(" ")[0]}</div>
 <b>${c[0].replace(c[0].split(" ")[0],"")}</b>
 </div>`;
