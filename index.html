@@ -52,12 +52,6 @@ input{
   border:none;
 }
 
-/* compare */
-.compare{
-  text-align:center;
-  margin:10px;
-}
-
 select,button{
   padding:8px;
   margin:4px;
@@ -172,12 +166,6 @@ Explore countries around the world including their flags, capitals, population, 
   <button class="more-btn" onclick="openMore()">
     🎮 More Games & Quiz
   </button>
-</div>
-<!-- COMPARE -->
-<div class="compare">
-<select id="c1"></select>
-<select id="c2"></select>
-<button onclick="compare()">Compare</button>
 </div>
 
 <input id="search" placeholder="Search country..." onkeyup="filter()">
@@ -483,37 +471,6 @@ function closeModal(){
 document.getElementById("modal").style.display="none";
 }
 
-/* COMPARE SYSTEM */
-let s1=document.getElementById("c1");
-let s2=document.getElementById("c2");
-
-countries.forEach(c=>{
-s1.innerHTML+=`<option>${c[0]}</option>`;
-s2.innerHTML+=`<option>${c[0]}</option>`;
-});
-
-function compare(){
-
-let a = countries.find(c=>c[0]==s1.value);
-let b = countries.find(c=>c[0]==s2.value);
-
-let popA = Number(a[2]);
-let popB = Number(b[2]);
-
-let winner = popA > popB ? a : b;
-
-document.getElementById("modal").style.display="flex";
-
-document.getElementById("n").innerText="⚔ Country Battle Result";
-document.getElementById("c").innerText="";
-document.getElementById("p").innerText="";
-document.getElementById("l").innerText="";
-document.getElementById("cur").innerText="";
-
-document.getElementById("result").innerHTML =
-`${a[0]} VS ${b[0]} <br><br>
-🏆 WINNER: <b>${winner[0]}</b>`;
-}
 function openMore(){
   window.location.href="https://saimhan7865-star.github.io/World-Quiz/";
   }
