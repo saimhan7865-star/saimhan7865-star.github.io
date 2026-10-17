@@ -901,5 +901,147 @@ function installApp() {
   }
 }
 </script>
+
+  <!-- Login and Signup Section -->
+<section id="auth-section" style="
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #f4f7fb;
+  border-radius: 12px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+">
+  <h2>World Explorer Pro Max</h2>
+  <h3>Login / Create Account</h3>
+
+  <input id="auth-name" type="text"
+    placeholder="Your name (signup only)"
+    style="width:90%;padding:12px;margin:8px 0;">
+
+  <input id="auth-email" type="email"
+    placeholder="Email address"
+    autocomplete="email"
+    style="width:90%;padding:12px;margin:8px 0;">
+
+  <input id="auth-password" type="password"
+    placeholder="Password (minimum 6 characters)"
+    autocomplete="current-password"
+    style="width:90%;padding:12px;margin:8px 0;">
+
+  <button id="signup-btn"
+    style="padding:12px 20px;margin:8px;cursor:pointer;">
+    Sign Up
+  </button>
+
+  <button id="login-btn"
+    style="padding:12px 20px;margin:8px;cursor:pointer;">
+    Login
+  </button>
+
+  <button id="logout-btn" hidden
+    style="padding:12px 20px;margin:8px;cursor:pointer;">
+    Logout
+  </button>
+
+  <p id="auth-message" role="status"></p>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://rqmoohkmbpmqgtohxpag.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_BaE7mt78HVqLRCw71QKieQ_fDzf2Opc";
+
+const client = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const message = document.getElementById("auth-message");
+
+document.getElementById("signup-btn").onclick = async () => {
+  const name = document.getElementById("auth-name").value.trim();
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+
+  if (!name || !email || password.length < 6) {
+    message.textContent =
+      "Enter your name, valid email and a password of at least 6 characters.";
+    return;
+  }
+
+  message.textContent = "Creating account...";
+
+  const { data, error } = await client.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { display_name: name },
+      emailRedirectTo: "https://saimhan7865-star.github.io/"
+    }
+  });
+
+  if (error) {
+    message.textContent = error.message;
+  } else if (data.session) {
+    message.textContent = "Account created successfully!";
+    updateAuthUI(data.user);
+  } else {
+    message.textContent =
+      "Signup submitted! Check your email for a confirmation link.";
+  }
+};
+
+document.getElementById("login-btn").onclick = async () => {
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+
+  message.textContent = "Logging in...";
+
+  const { data, error } = await client.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    message.textContent = error.message;
+  } else {
+    message.textContent = "Welcome back!";
+    updateAuthUI(data.user);
+  }
+};
+
+document.getElementById("logout-btn").onclick = async () => {
+  const { error } = await client.auth.signOut();
+
+  if (error) {
+    message.textContent = error.message;
+  } else {
+    message.textContent = "Logged out successfully.";
+    updateAuthUI(null);
+  }
+};
+
+function updateAuthUI(user) {
+  document.getElementById("signup-btn").hidden = !!user;
+  document.getElementById("login-btn").hidden = !!user;
+  document.getElementById("logout-btn").hidden = !user;
+
+  if (user) {
+    message.textContent = "Logged in as " + user.email;
+  }
+}
+
+client.auth.onAuthStateChange((_event, session) => {
+  updateAuthUI(session?.user ?? null);
+});
+
+client.auth.getSession().then(({ data }) => {
+  updateAuthUI(data.session?.user ?? null);
+});
+</script>
 </body>
   </html>
