@@ -1014,53 +1014,40 @@ document.getElementById("login-btn").onclick = async () => {
   }
 };
 </script>
-  <!-- Contact Form -->
+  
+<!-- Contact Form -->
 <div style="max-width:400px;margin:30px auto;padding:20px;
 background:#fff;border-radius:12px;box-shadow:0 2px 10px #ccc;
 font-family:Arial,sans-serif;">
 
   <h2 style="text-align:center;">Contact Us</h2>
 
-  <form action="https://formsubmit.co/saimhan7865@gmail.com"
-        method="POST">
+  <form action="https://formsubmit.co/saimhan7865@gmail.com" method="POST">
 
     <input type="hidden" name="_subject"
            value="New Message from World Explorer Pro Max">
 
     <input type="hidden" name="_captcha" value="true">
 
-    <label for="visitor-name">Name</label>
+    <input type="hidden" name="_next"
+           value="https://saimhan7865-star.github.io/">
 
-    <input
-      id="visitor-name"
-      type="text"
-      name="name"
-      placeholder="Enter your name"
-      required
-      style="width:100%;box-sizing:border-box;padding:12px;
-      margin:8px 0 15px;border:1px solid #ccc;border-radius:8px;"
-    >
+    <label for="visitor-name">Name</label>
+    <input id="visitor-name" type="text" name="name"
+           placeholder="Enter your name" required
+           style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 15px;">
 
     <label for="visitor-comment">Comment</label>
+    <textarea id="visitor-comment" name="comment"
+              placeholder="Write your comment here..." rows="5" required
+              style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 15px;"></textarea>
 
-    <textarea
-      id="visitor-comment"
-      name="comment"
-      placeholder="Write your comment here..."
-      rows="5"
-      required
-      style="width:100%;box-sizing:border-box;padding:12px;
-      margin:8px 0 15px;border:1px solid #ccc;border-radius:8px;"
-    ></textarea>
-
-    <button
-      type="submit"
-      style="width:100%;padding:13px;background:#087bff;
-      color:white;border:none;border-radius:8px;font-size:17px;
-      cursor:pointer;"
-    >Send</button>
+    <button type="submit"
+            style="width:100%;padding:13px;background:#087bff;color:white;border:none;border-radius:8px;font-size:17px;cursor:pointer;">
+      Send
+    </button>
 
   </form>
 </div>
 </body>
-  </html>
+</html>
